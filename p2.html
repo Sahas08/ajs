@@ -1,0 +1,65 @@
+<!DOCTYPE>
+
+<html>
+    <head>
+        <title>Shopping list</title>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+        <script>
+            var app = angular.module("myApp" , [])
+
+            app.controller("myCntrl" , function($scope){
+                $scope.shoppingitems = ['Egg' , 'Milk' , 'Maggie']
+                $scope.newitem = ''
+                $scope.selectitem= ''
+
+                $scope.additem = function(){
+                    if($scope.newitem && $scope.shoppingitems.indexOf($scope.newitem)==-1){
+                        $scope.shoppingitems.push($scope.newitem)
+                        $scope.newitem = ''
+                    } else {
+                        if($scope.newitem){
+                            alert('Item is already in the list')
+                        } else {
+                            alert('Enter an item to add')
+                        }
+                    }
+                }
+
+                $scope.removeitem = function(){
+                    var index = $scope.shoppingitems.indexOf($scope.selectitem)
+
+                    if(index==-1){
+                        alert("Enter a valid item to remove")
+                    } else {
+                        $scope.shoppingitems.splice(index, 1)
+                        $scope.selectitem = ''
+                    }
+                }
+            });
+        </script>
+    </head>
+
+    <body ng-app="myApp">
+
+        <h2>Shopping List</h2>
+
+        <div ng-controller="myCntrl">
+
+            <h4>Items in the list</h4>
+            <ul>
+                <li ng-repeat="item in shoppingitems" ng-model="shoppingitems">{{item}}</li>
+            </ul>
+
+            Please add an item to add : <input type="text" ng-model="newitem">
+            <button ng-click="additem()">Add Item</button>
+            <br> <br>
+            Please select an item to remove:
+            <select ng-options="item for item in shoppingitems" ng-model="selectitem"></select>
+            <button ng-click="removeitem()">Remove Item</button>
+
+        </div>
+        
+    </body>
+</html>
