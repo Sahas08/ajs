@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Calculator</title>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+        <script>
+            var app = angular.module("myApp" , [])
+
+            app.controller("myCntrl" , function($scope){
+                $scope.num1 = 0
+                $scope.num2 = 0
+                $scope.result = 0
+                $scope.operation = 'add'
+
+                $scope.calculate = function(){
+                    switch($scope.operation){
+                        case 'add' : $scope.result = $scope.num1 + $scope.num2;
+                            break;
+
+                        case 'sub' : $scope.result = $scope.num1 - $scope.num2;
+                            break;
+
+                        case 'mul' : $scope.result = $scope.num1 * $scope.num2;
+                            break;
+
+                        case 'div' :
+                            if($scope.num2==0){
+                                alert("Divide by zero error")
+                            break;
+                        }
+                            $scope.result = $scope.num1 / $scope.num2
+                            break;
+                    }
+                }
+            });
+        </script>
+    </head>
+
+    <body ng-app="myApp">
+
+        <h2>Perform operations</h2>
+
+        <div ng-controller="myCntrl">
+
+            Enter the first number : <input type="number" ng-model="num1">
+            Enter the second number : <input type="number" ng-model="num2">
+            Select an option :
+            <select ng-model="operation">
+                <option value="add">+</option>
+                <option value="sub">-</option>
+                <option value="mul">*</option>
+                <option value="div">/</option>
+            </select>
+            <button ng-click="calculate()">Compute</button>
+            Result : {{num1 + " " + operation + " " + num2 + " " + " = " + result}}
+
+        </div>
+        
+    </body>
+</html>
