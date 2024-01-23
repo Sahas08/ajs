@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Task</title>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+        <script>
+            var app = angular.module("myApp" , [])
+            app.controller("myCntrl" , function($scope){
+                $scope.tasks = [
+                    {
+                        "TITLE" : "Task-1",
+                        "COMPLETED" : true,
+                        "EDITING" : false
+                    } , 
+                    {
+                        "TITLE" : "Task-2",
+                        "COMPLETED" : true,
+                        "EDITING" : false    
+                    } ,
+                    {
+                        "TITLE" : "Task-3",
+                        "COMPLETED" : true,
+                        "EDITING" : false
+                    }
+                ]
+
+                $scope.addtask = function(){
+                    if($scope.newtask && $scope.tasks.indexOf($scope.newtask)==-1){
+                        $scope.tasks.push($scope.newtask)
+                        $scope.newtask = ''
+                    } else {
+                        alert("Insert a task to add")
+                    }
+                }
+
+                $scope.deletetask = function(task){
+                    var index = $scope.tasks.indexOf(task)
+                    $scope.tasks.splice(index, 1)
+                }
+
+                $scope.edittask = function(task){
+                    task.EDITING = true
+                }
+
+                $scope.turnOffEditing = function(task){
+                    task.EDITING = false
+                }
+            });
+        </script>
+    </head>
+    
+    <body ng-app="myApp">
+        <h2>TASKS</h2>
+        <div ng-controller="myCntrl">
+
+            <ul>
+
+                <li ng-repeat="task in tasks">
+                    <input type="checkbox" ng-model="task.COMPLETED">
+                    <span ng-show="!task.EDITING">{{task.TITLE}}</span>
+                    <input type="text" ng-model="task.TITLE" ng-show="task.EDITING" ng-blur="turnOffEditing(task)">
+                    <button ng-click="edittask(task)">EDIT</button>
+                    <button ng-click="deletetask(task)">DELETE</button>
+                </li>
+
+            </ul>
+
+
+        </div>
+        
+    </body>
+</html>
